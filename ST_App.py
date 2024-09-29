@@ -13,7 +13,7 @@ with open('OHE_Geography.pkl','rb') as file:
 with open('SScaler.pkl','rb') as file:
     SScaler=pickle.load(file)
 
-st.title('Custoem Detector')
+st.title('Customer Churn/Leaving Bank Probability Detector')
 CreditScore=st.number_input('Credit Score',step=50)
 Geography=st.selectbox("Geography",OHE_Geography.categories_[0])
 Gender=st.selectbox('Gender',LE_Gender.classes_)
@@ -48,6 +48,7 @@ Test_Data=pd.concat([Test_Data.drop(['Geography'],axis=1),OHE_Geography_List_DF]
 
 Test_Data=SScaler.transform(Test_Data)
 
+Prediction=My_Model.predict(Test_Data)
 if Prediction[0][0] >= 0.50:
     st.write(f'The Customer will Churn/leave Bank.\nProabibility of churning/leaving bank {round(Prediction[0][0]*100,2)}%.')
 else:
@@ -55,4 +56,3 @@ else:
 
 st.write('Note:-') 
 st.write('The above prediction is based on data of 10000 cases (individual cases).\nThe above model is trained on above 10k cases based on which prediction is made.\nFor this network ANN (Artificial Neural Network) is used with 2 HL')
-
